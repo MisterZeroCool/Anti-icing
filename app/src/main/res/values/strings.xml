@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Anti-icing</string>
+    <string name="question_title_hint">Enter a title for the question</string>
+    <string name="question_answer_hint">Enter answer</string>
+    <string name="question_title_label">Title</string>
+    <string name="question_answer">Answer</string>
 </resources>
