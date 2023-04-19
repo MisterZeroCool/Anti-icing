@@ -4,4 +4,6 @@
     <string name="question_answer_hint">Enter answer</string>
     <string name="question_title_label">Title</string>
     <string name="question_answer">Answer</string>
+    <string name="question_solved_label">Solved</string>
+    <string name="answer_details_label">Answer</string>
 </resources>

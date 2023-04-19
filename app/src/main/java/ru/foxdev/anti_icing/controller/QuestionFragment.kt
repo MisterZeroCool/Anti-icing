@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.EditText
 import androidx.fragment.app.Fragment
 import ru.foxdev.anti_icing.R
@@ -16,6 +17,7 @@ class QuestionFragment:Fragment() {
     private lateinit var question: Question
     private lateinit var titleField: EditText
     private lateinit var answerField: EditText
+    private lateinit var solvedCheckBox: CheckBox
     private lateinit var dateButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,6 +34,7 @@ class QuestionFragment:Fragment() {
         titleField = view.findViewById(R.id.question_title) as EditText
         answerField = view.findViewById(R.id.question_answer) as EditText
         dateButton = view.findViewById(R.id.question_date) as Button
+        solvedCheckBox = view.findViewById(R.id.question_solved) as CheckBox
 
         dateButton.apply {
             text = question.date.toString()
@@ -57,5 +60,7 @@ class QuestionFragment:Fragment() {
             }
         }
         titleField.addTextChangedListener(titleWatcher)
+        solvedCheckBox.apply {setOnCheckedChangeListener{ _, isChecked -> question.isSolved = isChecked}
+        }
     }
 }
