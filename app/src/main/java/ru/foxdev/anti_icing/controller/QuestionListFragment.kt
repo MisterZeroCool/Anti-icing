@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,15 +19,11 @@ private const val TAG = "QuestionListFragment"
 
 class QuestionListFragment:Fragment() {
     private lateinit var questionRecyclerView: RecyclerView
-    private var adapter: QuestionAdapter? = null
+    private var adapter: QuestionAdapter? = QuestionAdapter(emptyList())
     private val questionListViewModel: QuestionListViewModel by lazy {
         ViewModelProvider(this).get(QuestionListViewModel::class.java)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        Log.d(TAG, "Total question: ${questionListViewModel.questions.size}")
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,12 +33,24 @@ class QuestionListFragment:Fragment() {
         val  view = inflater.inflate(R.layout.fragment_question_list, container, false)
         questionRecyclerView = view.findViewById(R.id.question_recycler_view) as RecyclerView
         questionRecyclerView.layoutManager = LinearLayoutManager(context)
-        updateUI()
+        questionRecyclerView.adapter = adapter
         return view
     }
 
-    private fun updateUI(){
-        val questions = questionListViewModel.questions
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        questionListViewModel.questionListLiveData.observe(
+            viewLifecycleOwner,
+            Observer { questions ->
+                questions?.let {
+                    Log.i(TAG, "Got questions ${questions.size}")
+                    updateUI(questions)
+                }
+            }
+        )
+    }
+
+    private fun updateUI(questions: List<Question>){
         adapter = QuestionAdapter(questions)
         questionRecyclerView.adapter = adapter
     }
