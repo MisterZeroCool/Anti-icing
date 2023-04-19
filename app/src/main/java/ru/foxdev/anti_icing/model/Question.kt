@@ -9,4 +9,5 @@ import java.util.UUID
 data class Question(@PrimaryKey val id: UUID = UUID.randomUUID(),
                     var title: String = "",
                     var answer: String = "",
+                    var isSolved: Boolean = false,
                     var date: Date = Date())
