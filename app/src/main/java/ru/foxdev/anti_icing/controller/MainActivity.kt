@@ -3,8 +3,9 @@ package ru.foxdev.anti_icing.controller
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import ru.foxdev.anti_icing.R
+import java.util.UUID
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), QuestionListFragment.Callbacks {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -18,4 +19,14 @@ class MainActivity : AppCompatActivity() {
                 .commit()
         }
     }
+
+    override fun onQuestionSelected(questionId: UUID) {
+        val fragment = QuestionFragment.newInstance(questionId)
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.fragment_container,fragment)
+            .addToBackStack(null)
+            .commit()
+    }
+
 }

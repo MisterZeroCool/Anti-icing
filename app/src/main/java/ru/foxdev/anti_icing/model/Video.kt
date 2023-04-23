@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import java.util.Date
 import java.util.UUID
 @Entity
-class Video (@PrimaryKey val id: UUID = UUID.randomUUID(),
+data class Video (@PrimaryKey val id: UUID = UUID.randomUUID(),
              var title: String = "",
              var description: String = "",
              var video: VideoView,

@@ -12,6 +12,9 @@ import android.widget.EditText
 import androidx.fragment.app.Fragment
 import ru.foxdev.anti_icing.R
 import ru.foxdev.anti_icing.model.Question
+import java.util.UUID
+
+private const val ARG_QUESTION_ID = "question_id"
 
 class QuestionFragment:Fragment() {
     private lateinit var question: Question
@@ -23,6 +26,8 @@ class QuestionFragment:Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         question = Question()
+
+        val questionId: UUID = arguments?.getSerializable(ARG_QUESTION_ID) as UUID
     }
 
     override fun onCreateView(
@@ -61,6 +66,17 @@ class QuestionFragment:Fragment() {
         }
         titleField.addTextChangedListener(titleWatcher)
         solvedCheckBox.apply {setOnCheckedChangeListener{ _, isChecked -> question.isSolved = isChecked}
+        }
+    }
+
+    companion object{
+        fun newInstance(questionId: UUID): QuestionFragment{
+            val args = Bundle().apply {
+                putSerializable(ARG_QUESTION_ID, questionId)
+            }
+            return QuestionFragment().apply {
+                arguments = args
+            }
         }
     }
 }
